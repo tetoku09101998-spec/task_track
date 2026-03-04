@@ -29,12 +29,11 @@
             max-width: 600px;
             margin: 0 auto;
             padding: 1rem;
-            padding-bottom: 2rem; /* 下部の余白 */
+            padding-bottom: 2rem;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent; /* タップ時のハイライトを消す */
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* アプリ風のコンテナ */
         .container {
             display: flex;
             flex-direction: column;
@@ -49,12 +48,13 @@
             font-weight: 700;
         }
 
-        /* カードスタイルのセクション */
         .section {
             background: var(--card-background);
             padding: 1.25rem;
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-sizing: border-box;
+            width: 100%;
         }
 
         .section-title {
@@ -66,13 +66,14 @@
             letter-spacing: 0.05em;
         }
 
-        .flex {
+        .flex-row {
             display: flex;
             gap: 0.75rem;
             align-items: center;
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        /* 入力フォームのスタイル */
         input[type="text"], input[type="number"] {
             padding: 0.75rem;
             border: 1px solid #e0e0e0;
@@ -88,7 +89,6 @@
             border-color: var(--primary-color);
         }
 
-        /* ボタンのスタイル */
         button {
             padding: 0.75rem 1rem;
             background-color: var(--primary-color);
@@ -100,13 +100,12 @@
             font-size: 1rem;
             transition: background-color 0.2s;
             white-space: nowrap;
+            box-sizing: border-box;
         }
 
-        button:hover {
-            background-color: #2980b9;
-        }
+        button:hover { background-color: #2980b9; }
 
-        button.small {
+        .small-btn {
             padding: 0.5rem 0.75rem;
             font-size: 0.9rem;
         }
@@ -116,12 +115,8 @@
             width: 100%;
             margin-top: 1rem;
         }
+        .danger-btn:hover { background-color: #c0392b; }
 
-        .danger-btn:hover {
-            background-color: #c0392b;
-        }
-
-        /* スコア表示 */
         .score-display {
             text-align: center;
             font-size: 1.5rem;
@@ -129,14 +124,12 @@
             color: var(--text-color);
             margin-bottom: 0.5rem;
         }
-
         .score-display .target {
             color: var(--text-secondary);
             font-size: 1rem;
             font-weight: 400;
         }
 
-        /* プログレスバー */
         .progress-container {
             background: #e0e0e0;
             border-radius: 10px;
@@ -145,7 +138,6 @@
             overflow: hidden;
             margin: 0.5rem 0;
         }
-
         .progress-bar {
             background: var(--success-color);
             height: 100%;
@@ -153,7 +145,14 @@
             transition: width 0.3s ease;
         }
 
-        /* タスクリスト */
+        .task-input-group {
+            display: flex;
+            gap: 0.75rem;
+            width: 100%;
+        }
+        .task-input-group .input-name { flex: 2; }
+        .task-input-group .input-points { flex: 1; }
+
         ul {
             list-style-type: none;
             padding: 0;
@@ -162,12 +161,13 @@
             flex-direction: column;
             gap: 1rem;
         }
-
         li {
             background: #fdfdfd;
             padding: 1rem;
             border-radius: 10px;
             border: 1px solid #f0f0f0;
+            box-sizing: border-box;
+            width: 100%;
         }
 
         .task-header {
@@ -177,31 +177,31 @@
             margin-bottom: 0.75rem;
             gap: 0.5rem;
         }
-
         .task-info {
             display: flex;
             flex-direction: column;
             gap: 0.25rem;
+            flex: 1;
+            min-width: 0; /* flexアイテム内のテキスト折り返しに必須 */
         }
-
         .task-title {
             font-size: 1.1rem;
             font-weight: 600;
+            word-break: break-word; /* 長い文字のはみ出し防止 */
+            line-height: 1.3;
         }
-
         .task-points {
             color: #e67e22;
             font-size: 0.9rem;
             font-weight: 500;
         }
 
-        /* 曜日コンテナ (スマホ最適化) */
         .days-container {
             display: flex;
             gap: 6px;
             width: 100%;
+            box-sizing: border-box;
         }
-
         .day-box {
             flex: 1;
             text-align: center;
@@ -215,16 +215,10 @@
             color: #666;
             font-weight: 500;
         }
-
         .day-box.active {
             background: var(--success-color);
             color: white;
             font-weight: 700;
-        }
-
-        /* 履歴セクション */
-        .history-section {
-            margin-top: 1rem;
         }
 
         .history-item {
@@ -236,56 +230,28 @@
             align-items: center;
             color: var(--text-color);
         }
+        .history-item:last-child { border-bottom: none; }
+        .history-date { color: var(--text-secondary); }
+        .achieved { color: var(--success-color); font-weight: bold; }
+        .failed { color: var(--danger-color); }
 
-        .history-item:last-child {
-            border-bottom: none;
-        }
-
-        .history-date {
-            color: var(--text-secondary);
-        }
-
-        .achieved {
-            color: var(--success-color);
-            font-weight: bold;
-        }
-
-        .failed {
-            color: var(--danger-color);
-        }
-
-        /* レスポンシブ対応 (スマホ用レイアウト調整) */
+        /* 完全なスマホ用レイアウト上書き */
         @media (max-width: 600px) {
-            body {
-                padding: 0.75rem;
-            }
-
-            h1 {
-                font-size: 1.1rem;
-            }
-
-            .flex.task-input-group {
+            body { padding: 0.5rem; }
+            .section { padding: 1rem; }
+            
+            .task-input-group {
                 flex-direction: column;
-                gap: 0.75rem;
-                align-items: flex-start;
             }
-
-            .flex.task-input-group button {
+            .task-input-group .input-name,
+            .task-input-group .input-points,
+            .task-input-group button {
                 width: 100%;
+                flex: none; /* flex設定をリセット */
             }
 
-            .days-container {
-                gap: 4px;
-            }
-
-            .day-box {
-                font-size: 0.75rem;
-                padding: 12px 0; /* タッチ領域を広く */
-            }
-
-            .task-title {
-                font-size: 1rem;
-            }
+            .days-container { gap: 4px; }
+            .day-box { font-size: 0.75rem; padding: 12px 0; }
         }
     </style>
 </head>
@@ -296,9 +262,9 @@
 
     <div class="section">
         <div class="section-title">今週の目標</div>
-        <div class="flex">
+        <div class="flex-row">
             <input type="number" id="targetScoreInput" placeholder="例: 100" min="1">
-            <button class="small" onclick="setTarget()">設定</button>
+            <button class="small-btn" onclick="setTarget()">設定</button>
         </div>
         <div class="score-display" style="margin-top: 1rem;">
             <span id="currentScore">0</span> <span class="target">/ <span id="targetScoreDisplay">0</span> 点</span>
@@ -310,9 +276,9 @@
 
     <div class="section">
         <div class="section-title">タスク追加</div>
-        <div class="flex task-input-group">
-            <input type="text" id="taskName" placeholder="タスク名" style="flex: 2;">
-            <input type="number" id="taskPoints" placeholder="点" min="1" style="flex: 1;">
+        <div class="task-input-group">
+            <input type="text" id="taskName" class="input-name" placeholder="タスク名">
+            <input type="number" id="taskPoints" class="input-points" placeholder="点数/回" min="1">
             <button onclick="addTask()">追加</button>
         </div>
     </div>
@@ -323,7 +289,7 @@
         <button class="danger-btn" onclick="resetWeek()">今週を完了して履歴に保存</button>
     </div>
 
-    <div class="section history-section">
+    <div class="section">
         <div class="section-title">過去の戦績</div>
         <div id="historyList"></div>
         <button style="background: #95a5a6; font-size: 0.75rem; margin-top: 1rem; width: 100%;" onclick="clearHistory()">履歴を全削除</button>
@@ -331,7 +297,6 @@
 </div>
 
 <script>
-    // Service Workerの登録 (前回の設定を維持)
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('sw.js')
@@ -388,7 +353,7 @@
                 target: targetScore,
                 percent: targetScore > 0 ? Math.round((currentTotal / targetScore) * 100) : 0
             };
-            history.unshift(result); // 新しい順
+            history.unshift(result);
             tasks = tasks.map(t => ({ ...t, days: Array(7).fill(false) }));
             save();
         }
@@ -407,7 +372,7 @@
 
     function render() {
         document.getElementById('targetScoreDisplay').innerText = targetScore;
-        document.getElementById('targetScoreInput').value = targetScore > 0 ? targetScore : ''; // 入力欄にも反映
+        document.getElementById('targetScoreInput').value = targetScore > 0 ? targetScore : '';
 
         const currentTotal = calculateScore();
         document.getElementById('currentScore').innerText = currentTotal;
@@ -422,7 +387,7 @@
                         <span class="task-title">${t.name}</span>
                         <span class="task-points">${t.points}点/回</span>
                     </div>
-                    <button onclick="deleteTask(${t.id})" style="background:none; color:var(--danger-color); padding: 0; font-size: 1.2rem;">✖</button>
+                    <button onclick="deleteTask(${t.id})" style="background:none; color:var(--danger-color); padding: 0 0 0 10px; font-size: 1.2rem; align-self: center;">✖</button>
                 </div>
                 <div class="days-container">
                     ${t.days.map((d, i) => `<div class="day-box ${d ? 'active' : ''}" onclick="toggleDay(${t.id}, ${i})">${dayNames[i]}</div>`).join('')}
@@ -440,7 +405,6 @@
         `).join('');
     }
 
-    // 初回読み込み
     render();
 </script>
 </body>
