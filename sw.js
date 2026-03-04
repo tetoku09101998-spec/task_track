@@ -1,4 +1,4 @@
-const CACHE_NAME = 'task-manager-v1';
+const CACHE_NAME = 'task-manager-v2'; // v1からv2に変更して保存
 const urlsToCache = ['./', 'index.html'];
 
 self.addEventListener('install', (event) => {
@@ -7,4 +7,5 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('fetch', (event) => {
     event.respondWith(caches.match(event.request).then((response) => response || fetch(event.request)));
+
 });
